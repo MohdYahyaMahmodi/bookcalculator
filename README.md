@@ -27,9 +27,10 @@ This project helps you estimate how many books you can read within a defined tim
 
 \[Deployed link here, if applicable\]
 
+
 **Installation**
 
-1.  Clone this repository:git clone https://github.com/MohdYahyaMahmodi/bookcalculator
+1.  Clone this repository: git clone https://github.com/MohdYahyaMahmodi/bookcalculator
     
 2.  Open index.html in your web browser. No additional setup is required.
     
@@ -49,11 +50,14 @@ This project is built with:
 
 The generateCarouselSlides() function dynamically populates the carousel with book data. Feel free to customize the bookData array with your favorite titles and relevant links.
 
+
 **Contributing**
 
 Feel free to submit pull requests for bug fixes, improvements, and new features.
 
+
 **License**
+
 
 This project is licensed under the MIT License - see the LICENSE: LICENSE file for details.
 
