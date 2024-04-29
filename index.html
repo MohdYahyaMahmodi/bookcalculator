@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <title>📚 Book Calculator</title>
+  <style>
+    .carousel-container {
+      width: 100%;
+      overflow-x: scroll;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
+    .carousel-container::-webkit-scrollbar {
+      display: none;
+    }
+    .carousel-wrapper {
+      display: flex;
+      scroll-snap-align: start;
+      padding-bottom: 20px;
+    }
+    .carousel-slide {
+      flex: 0 0 auto;
+      width: 200px;
+      margin-right: 20px;
+      scroll-snap-align: start;
+    }
+    .carousel-slide img {
+      width: 100%;
+      height: auto;
+      object-fit: cover;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    .result-text {
+      font-size: 1.5rem;
+      line-height: 1.5;
+    }
+    .result-number {
+      font-size: 3rem;
+      font-weight: bold;
+      margin: 0 0.5rem;
+    }
+
+    /* Base styles - applies to all screens */
+    .custom-paragraph {
+      line-height: 2.50; /* Good for desktop */
+    }
+
+    /* Responsive styles for screens narrower than 640px (common breakpoint for mobile devices) */
+    @media (max-width: 640px) {
+      .custom-paragraph {
+        line-height: 1.6; /* More appropriate for mobile */
+      }
+      .max-w-3xl {
+        max-width: 100%; /* Allow div to expand fully on smaller screens */
+        padding: 20px; /* Adjust padding */
+      }
+      .text-4xl {
+        font-size: 1.5rem; /* Smaller text size for mobile */
+      }
+    }
+
+    .grabbing {
+  cursor: grabbing;
+}
+  </style>
+</head>
+<body class="bg-gray-100">
+  <nav class="bg-white shadow-md">
+    <div class="container mx-auto px-4 py-3 md:flex md:justify-between md:items-center">
+      <div class="flex justify-between items-center">
+        <div>
+          <a class="text-xl font-bold text-gray-800 hover:text-gray-700" href="#">📚 Book Calculator 🧮</a>
+        </div>
+        <div class="md:hidden">
+          <button type="button" class="block text-gray-800 hover:text-gray-700 focus:text-gray-700 focus:outline-none">
+            <svg class="h-6 w-6 fill-current" viewBox="0 0 24 24">
+              <path class="hidden" fill-rule="evenodd" clip-rule="evenodd" d="M18.278 16.864a1 1 0 01-1.414 1.414l-4.829-4.828-4.828 4.828a1 1 0 01-1.414-1.414l4.828-4.829-4.828-4.828a1 1 0 011.414-1.414l4.829 4.828 4.828-4.828a1 1 0 111.414 1.414l-4.828 4.829 4.828 4.828z"/>
+              <path class="fill-current" fill-rule="evenodd" clip-rule="evenodd" d="M4 5h16a1 1 0 010 2H4a1 1 0 110-2zm0 6h16a1 1 0 010 2H4a1 1 0 010-2zm0 6h16a1 1 0 010 2H4a1 1 0 010-2z"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container mx-auto px-4 py-8">
+    <h1 class="text-4xl font-bold text-center mb-8">📚 Book Calculator 🧮</h1>
+    <div class="max-w-3xl mx-auto bg-white p-6 rounded-lg shadow-md">
+      <p class="text-lg mb-4 leading-relaxed custom-paragraph">
+        If I read for
+        <select id="minutes" class="border border-gray-300 rounded-md px-2 py-1 focus:outline-none focus:ring-2 focus:ring-blue-500">
+          <!-- options -->
+          <option value="15">15 minutes ⏰</option>
+          <option value="30">30 minutes ⌛</option>
+          <option value="45">45 minutes ⏳</option>
+          <option value="60">1 hour 🕐</option>
+          <option value="90">1.5 hours 🕜</option>
+          <option value="120">2 hours 🕑</option>
+        </select>
+        per day at a 
+        <select id="wpm" class="border border-gray-300 rounded-md px-2 py-1 focus:outline-none focus:ring-2 focus:ring-blue-500">
+          <option value="150">slow (150 wpm) 🐢</option>
+          <option value="200" selected>average (200 wpm) 🚶‍♂️</option>
+          <option value="250">fast (250 wpm) 🏃‍♂️</option>
+          <option value="300">very fast (300 wpm) 🚀</option>
+        </select>
+        speed for 
+        <select id="duration" class="border border-gray-300 rounded-md px-2 py-1 focus:outline-none focus:ring-2 focus:ring-blue-500">
+          <option value="7">1 week 📅</option>
+          <option value="30">1 month 📆</option>
+          <option value="90">3 months 📅</option>
+          <option value="180">6 months 📅</option>
+          <option value="365">1 year 🗓️</option>
+        </select> ,
+        I will read approximately...
+      </p>
+      <p class="text-4xl font-bold text-center mt-6">
+        <span id="result" class="result-number"></span> books 📚
+      </p>
+    </div>
+
+    <div class="mt-8">
+      <h2 class="text-2xl font-bold text-center mb-4">📚 Book Covers 🎨</h2>
+      <div class="carousel-container">
+        <div class="carousel-wrapper"></div>
+      </div>
+    </div>
+  </div>
+
+  <script src="bookData.js"></script>
+  <script src="main.js"></script>
+</body>
+</html>
